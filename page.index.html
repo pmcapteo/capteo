@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capteo — Aperçu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0f1f4b; --navy-dark:#080f28; --orange:#e8460a; --orange-lt:#fff3ee;
+  --orange-mid:#f47a4a; --cream:#f8f6f1; --ink:#0a1628; --ink2:#374165;
+  --grey:#8a92a8; --grey-l:#f0f0f5; --white:#fff; --green:#0a6e3f;
+  --green-l:#e4f5ed; --border:rgba(15,31,75,.10);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Bricolage Grotesque',sans-serif;letter-spacing:-.03em;line-height:1.06}
+a{color:inherit;text-decoration:none}
+.container{max-width:1080px;margin:0 auto;padding:0 40px}
+
+/* URGENCY */
+.urgency{background:var(--orange);color:#fff;text-align:center;padding:9px 20px;font-size:.82rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;position:relative;overflow:hidden}
+.urgency::after{content:'';position:absolute;top:0;left:-100%;width:60px;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);animation:shine 3s infinite}
+@keyframes shine{to{left:150%}}
+.udot{width:7px;height:7px;border-radius:50%;background:#fff;animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+/* NAV */
+nav{background:rgba(248,246,241,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:99}
+.nav-inner{max-width:1080px;margin:0 auto;padding:0 40px;height:60px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{font-family:'Bricolage Grotesque',sans-serif;font-size:1.25rem;font-weight:800;color:var(--navy);letter-spacing:-.04em}
+.logo span{color:var(--orange)}
+.nav-links{display:flex;gap:28px}
+.nav-links a{font-size:.84rem;font-weight:500;color:var(--ink2);transition:color .15s}
+.nav-links a:hover{color:var(--navy)}
+.nav-cta{background:var(--orange);color:#fff!important;padding:9px 20px;border-radius:10px;font-size:.82rem;font-weight:700;transition:background .15s,transform .1s;white-space:nowrap}
+.nav-cta:hover{background:#c43d08;transform:translateY(-1px)}
+
+/* HERO */
+.hero{position:relative;padding:72px 0 90px;overflow:hidden;background:var(--cream)}
+.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 65% 55% at 100% 10%,rgba(232,70,10,.08) 0%,transparent 65%),radial-gradient(ellipse 55% 55% at 0% 90%,rgba(15,31,75,.06) 0%,transparent 60%);pointer-events:none}
+.hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(15,31,75,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(15,31,75,.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
+.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:8px;background:var(--orange-lt);border:1px solid rgba(232,70,10,.18);color:var(--orange);font-size:.72rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:6px 14px;border-radius:100px;margin-bottom:24px}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite}
+h1{font-size:clamp(2.2rem,3.8vw,3.8rem);font-weight:800;color:var(--ink);margin-bottom:20px}
+h1 em{color:var(--orange);font-style:italic;position:relative;display:inline-block}
+h1 em::after{content:'';position:absolute;left:0;right:0;bottom:-3px;height:3px;background:var(--orange);border-radius:2px}
+.hero-sub{font-size:1.05rem;color:var(--ink2);line-height:1.7;max-width:490px;margin-bottom:28px}
+
+/* FORM */
+.lead-form{display:flex;flex-direction:column;gap:10px;max-width:470px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+input,select{width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:.92rem;font-family:'DM Sans',sans-serif;background:#fff;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,70,10,.1)}
+input::placeholder,select::placeholder{color:var(--grey)}
+select{appearance:none;cursor:pointer;color:var(--grey)}
+select.filled{color:var(--ink)}
+.btn-primary{width:100%;background:var(--orange);color:#fff;border:none;padding:15px 24px;border-radius:10px;font-size:1rem;font-weight:700;font-family:'Bricolage Grotesque',sans-serif;letter-spacing:-.01em;cursor:pointer;transition:background .15s,transform .1s,box-shadow .15s;box-shadow:0 4px 20px rgba(232,70,10,.3)}
+.btn-primary:hover{background:#c43d08;transform:translateY(-2px);box-shadow:0 8px 28px rgba(232,70,10,.4)}
+.form-note{font-size:.74rem;color:var(--grey);text-align:center}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.pill{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--border);border-radius:100px;padding:5px 12px;font-size:.76rem;color:var(--ink2);font-weight:500}
+.pill-check{color:var(--green);font-weight:800}
+
+/* SUCCESS STATE */
+.form-success{display:none;flex-direction:column;align-items:center;gap:10px;padding:28px 24px;background:var(--green-l);border:1px solid rgba(10,110,63,.2);border-radius:14px;text-align:center;max-width:470px}
+.form-success.show{display:flex}
+.lead-form.hide{display:none}
+.success-icon{width:44px;height:44px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700}
+.form-success strong{font-size:1rem;color:var(--green)}
+.form-success span{font-size:.85rem;color:var(--ink2)}
+
+/* PHONE */
+.hero-right{display:flex;justify-content:center;align-items:flex-start;padding-top:16px}
+.phone-wrap{position:relative}
+.phone-glow{position:absolute;inset:-30px;background:radial-gradient(ellipse at center,rgba(232,70,10,.18) 0%,transparent 70%);pointer-events:none}
+.phone{width:272px;background:#16182a;border-radius:38px;padding:12px;box-shadow:0 40px 80px rgba(0,0,0,.28),0 0 0 1px rgba(255,255,255,.04);position:relative}
+.phone-screen{background:#111827;border-radius:27px;overflow:hidden}
+.phone-status{background:#111827;padding:11px 20px 5px;display:flex;justify-content:space-between;font-size:.65rem;color:#555}
+.wa-header{background:#1f2c33;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.wa-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--navy));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;color:#fff;flex-shrink:0}
+.wa-name{font-weight:700;font-size:.8rem;color:#fff}
+.wa-status{font-size:.62rem;color:#8696a0}
+.wa-msgs{background:#0b141a;padding:12px 10px;display:flex;flex-direction:column;gap:8px;min-height:310px}
+.msg{max-width:80%;padding:7px 11px;font-size:.7rem;line-height:1.5;border-radius:10px;display:flex;flex-direction:column;opacity:0;animation:msgIn .35s ease forwards}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.recv{background:#1f2c33;color:#e3e3e3;align-self:flex-start;border-bottom-left-radius:2px}
+.sent{background:#005c4b;color:#e3e3e3;align-self:flex-end;border-bottom-right-radius:2px}
+.msg-time{font-size:.58rem;color:#8696a0;margin-top:3px;align-self:flex-end}
+.auto-tag{font-size:.58rem;background:rgba(232,70,10,.2);color:#f47a4a;border-radius:3px;padding:3px 7px;align-self:center;opacity:0;animation:msgIn .35s ease forwards}
+.m1{animation-delay:.4s}.m2{animation-delay:.7s}.m3{animation-delay:1s}.m4{animation-delay:1.3s}.m5{animation-delay:1.6s}.m6{animation-delay:1.9s}.m7{animation-delay:2.2s}.m8{animation-delay:2.5s}
+.phone-badge{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--border);border-radius:100px;padding:8px 16px;font-size:.75rem;font-weight:700;color:var(--green);white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.1);display:flex;align-items:center;gap:6px}
+
+/* STATS */
+.stats{background:var(--navy);padding:44px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.stat{text-align:center}
+.stat-num{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:2.4rem;font-weight:800;color:var(--orange);letter-spacing:-.04em;line-height:1;margin-bottom:6px}
+.stat-label{font-size:.8rem;color:rgba(255,255,255,.5);line-height:1.5}
+
+/* SECTIONS */
+section{padding:88px 0}
+.s-white{background:#fff}
+.s-cream{background:var(--cream)}
+.eyebrow{font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:14px}
+h2{font-size:clamp(1.9rem,3.2vw,2.8rem);font-weight:800;color:var(--ink);margin-bottom:16px}
+.s-intro{font-size:1rem;color:var(--ink2);line-height:1.7;max-width:540px;margin-bottom:52px}
+
+/* TIMELINE */
+.scenario{border:1px solid var(--border);border-radius:18px;overflow:hidden;max-width:820px}
+.sc-header{background:var(--navy);color:#fff;padding:14px 24px;font-size:.84rem;font-weight:600}
+.tl{padding:24px 28px;background:var(--cream);display:flex;flex-direction:column}
+.tl-item{display:flex;gap:16px;padding:14px 0;position:relative}
+.tl-item:not(:last-child)::after{content:'';position:absolute;left:19px;top:52px;bottom:-14px;width:2px;background:var(--border)}
+.tl-dot{width:40px;height:40px;border-radius:50%;background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.18);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;z-index:1}
+.tl-text{display:flex;flex-direction:column;gap:3px;padding-top:7px}
+.tl-text strong{font-size:.88rem;font-weight:700}
+.tl-text span{font-size:.82rem;color:var(--grey)}
+.hl{color:var(--orange);font-weight:700}
+
+/* STEPS */
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.step-card{background:#fff;padding:28px 24px;border-right:1px solid var(--border);transition:background .2s}
+.step-card:last-child{border-right:none}
+.step-card:hover{background:var(--grey-l)}
+.step-n{font-family:'Bricolage Grotesque',sans-serif;font-size:2.2rem;font-weight:800;color:rgba(15,31,75,.1);display:block;line-height:1;margin-bottom:14px}
+.step-card h3{font-size:.9rem;font-weight:700;margin-bottom:8px;color:var(--ink);line-height:1.3}
+.step-card p{font-size:.8rem;color:var(--grey);line-height:1.6}
+.step-tag{display:inline-block;margin-top:12px;background:var(--orange-lt);color:var(--orange);font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:100px}
+
+/* BA */
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:860px}
+.ba-card{border-radius:18px;padding:32px 28px;border:1.5px solid var(--border)}
+.ba-before{background:var(--cream)}
+.ba-after{background:var(--navy)}
+.ba-title{font-weight:800;font-size:.88rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:20px}
+.ba-before .ba-title{color:var(--grey)}
+.ba-after .ba-title{color:rgba(255,255,255,.5)}
+.ba-list{list-style:none;display:flex;flex-direction:column;gap:13px}
+.ba-list li{display:flex;align-items:flex-start;gap:10px;font-size:.88rem;line-height:1.5}
+.ba-before .ba-list li{color:var(--ink2)}
+.ba-after .ba-list li{color:rgba(255,255,255,.85)}
+.ba-before .ba-list li::before{content:'✕';color:#ef4444;font-weight:800;flex-shrink:0;margin-top:1px}
+.ba-after .ba-list li::before{content:'✓';color:#4ade80;font-weight:800;flex-shrink:0;margin-top:1px}
+
+/* TESTI */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.testi-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:28px;transition:transform .2s,box-shadow .2s}
+.testi-card:hover{transform:translateY(-4px);box-shadow:0 24px 64px rgba(0,0,0,.12)}
+.stars{color:var(--orange);font-size:.9rem;margin-bottom:14px}
+.testi-q{font-size:.95rem;font-style:italic;color:var(--ink);line-height:1.7;margin-bottom:20px}
+.t-author{display:flex;align-items:center;gap:12px}
+.t-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--orange));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.7rem;color:#fff;flex-shrink:0}
+.t-name{font-weight:700;font-size:.82rem}
+.t-role{font-size:.75rem;color:var(--grey)}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:1fr 1.08fr;gap:20px;max-width:860px}
+.price-card{border-radius:20px;padding:36px 32px;border:1.5px solid var(--border);position:relative;background:#fff;transition:transform .2s}
+.price-card:hover{transform:translateY(-4px)}
+.price-featured{border-color:var(--orange);background:linear-gradient(150deg,rgba(232,70,10,.03) 0%,#fff 55%);box-shadow:0 8px 40px rgba(232,70,10,.12)}
+.price-badge{position:absolute;top:-13px;left:24px;background:var(--orange);color:#fff;font-size:.7rem;font-weight:700;padding:4px 14px;border-radius:100px}
+.price-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:6px}
+.price-desc{font-size:.82rem;color:var(--grey);margin-bottom:20px;line-height:1.5}
+.price-num{font-family:'Bricolage Grotesque',sans-serif;font-size:3.2rem;font-weight:800;color:var(--navy);line-height:1;letter-spacing:-.04em}
+.price-num sup{font-size:1.1rem;vertical-align:super;font-family:'DM Sans',sans-serif;font-weight:700}
+.price-num small{font-size:1rem;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--grey)}
+.price-install{font-size:.8rem;color:var(--grey);margin-top:4px;margin-bottom:24px}
+.price-install strong{color:var(--orange)}
+.price-feats{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.price-feats li{display:flex;gap:10px;font-size:.85rem;color:var(--ink2);align-items:flex-start;line-height:1.4}
+.price-feats li::before{content:'→';color:var(--orange);font-weight:700;flex-shrink:0}
+.p-cta{display:block;text-align:center;padding:14px 20px;border-radius:10px;font-weight:700;font-size:.9rem;transition:all .15s;cursor:pointer}
+.p-cta-primary{background:var(--orange);color:#fff;box-shadow:0 4px 16px rgba(232,70,10,.3);border:none}
+.p-cta-primary:hover{background:#c43d08;transform:translateY(-1px)}
+.p-cta-secondary{background:var(--grey-l);color:var(--navy);border:1px solid var(--border)}
+.p-cta-secondary:hover{background:var(--border)}
+.roi-box{margin-top:24px;padding:20px 24px;background:var(--green-l);border-radius:12px;max-width:860px;display:flex;align-items:flex-start;gap:12px;font-size:.85rem;color:var(--green);line-height:1.6}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:12px;max-width:760px}
+.faq-item{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.faq-btn{width:100%;background:none;border:none;display:flex;justify-content:space-between;align-items:center;padding:20px 24px;text-align:left;gap:16px;cursor:pointer;transition:background .15s}
+.faq-btn:hover{background:var(--grey-l)}
+.faq-q{font-weight:600;font-size:.92rem;color:var(--ink);line-height:1.4}
+.faq-icon{width:26px;height:26px;border-radius:50%;flex-shrink:0;background:var(--orange-lt);color:var(--orange);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;transition:transform .25s}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-body{max-height:0;overflow:hidden;transition:max-height .35s ease;border-top:0 solid var(--border)}
+.faq-item.open .faq-body{max-height:200px;border-top-width:1px}
+.faq-body p{padding:18px 24px;font-size:.87rem;color:var(--ink2);line-height:1.7}
+
+/* CTA SECTION */
+.cta-section{background:var(--navy);padding:100px 0;text-align:center;position:relative;overflow:hidden}
+.cta-bg{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 70% at 15% 50%,rgba(232,70,10,.12) 0%,transparent 65%),radial-gradient(ellipse 50% 60% at 85% 50%,rgba(232,70,10,.08) 0%,transparent 60%)}
+.cta-inner{position:relative;z-index:1}
+.eyebrow-light{font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:14px}
+.cta-h2{font-size:clamp(2rem,3.5vw,3.2rem);font-weight:800;color:#fff;margin-bottom:16px;max-width:680px;margin-left:auto;margin-right:auto}
+.cta-p{font-size:1rem;color:rgba(255,255,255,.5);max-width:460px;margin:0 auto 36px;line-height:1.7}
+.cta-form{display:flex;flex-direction:column;gap:10px;max-width:540px;margin:0 auto}
+.cta-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cta-form input,.cta-form select{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.15);color:#fff}
+.cta-form input:focus,.cta-form select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,70,10,.2)}
+.cta-form input::placeholder{color:rgba(255,255,255,.3)}
+.cta-form select{color:rgba(255,255,255,.4)}
+.cta-form .form-note{color:rgba(255,255,255,.3)}
+.cta-success{display:none;flex-direction:column;align-items:center;gap:10px;padding:28px 24px;background:rgba(10,110,63,.2);border:1px solid rgba(74,222,128,.3);border-radius:14px;text-align:center;max-width:540px;margin:0 auto}
+.cta-success.show{display:flex}
+.cta-success strong{font-size:1rem;color:#4ade80}
+.cta-success span{font-size:.85rem;color:rgba(255,255,255,.6)}
+
+/* FOOTER */
+footer{background:var(--ink);padding:28px 0}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-logo{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1rem;color:#fff;letter-spacing:-.03em}
+.footer-logo span{color:var(--orange)}
+footer p{font-size:.76rem;color:rgba(255,255,255,.3)}
+footer a{color:rgba(255,255,255,.3)}
+footer a:hover{color:rgba(255,255,255,.6)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.25,.46,.45,.94),transform .65s cubic-bezier(.25,.46,.45,.94)}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- URGENCY -->
+<div class="urgency">
+  <span class="udot"></span>
+  🔥 Installation offerte ce mois-ci — 0 € au lieu de 199 € &nbsp;·&nbsp; Plus que <strong id="spots">&nbsp;7 places&nbsp;</strong> disponibles
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">Cap<span>teo</span></a>
+    <div class="nav-links">
+      <a href="#probleme">Le problème</a>
+      <a href="#solution">Comment ça marche</a>
+      <a href="#tarif">Tarifs</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#contact" class="nav-cta">Démo gratuite →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="hero-inner">
+
+      <div class="hero-left">
+        <div class="badge"><span class="bdot"></span> Assistant WhatsApp · Opérationnel en 90 min</div>
+        <h1>Ne perdez plus jamais<br>un chantier à cause<br>d'un <em>appel manqué.</em></h1>
+        <p class="hero-sub">Pendant que vous travaillez, Capteo répond automatiquement à vos prospects sur WhatsApp et récupère leurs informations. <strong>Zéro chantier perdu.</strong></p>
+
+        <form class="lead-form" id="heroForm" onsubmit="submitForm(event,'hero')">
+          <div class="form-row">
+            <input type="text" placeholder="Votre prénom" required>
+            <input type="tel" placeholder="Votre téléphone" required>
+          </div>
+          <select id="heroSelect" onchange="this.classList.add('filled')" required>
+            <option value="">Votre métier</option>
+            <option>Plombier</option><option>Électricien</option><option>Peintre</option>
+            <option>Maçon</option><option>Carreleur</option><option>Menuisier</option>
+            <option>Chauffagiste</option><option>Couvreur</option><option>Autre</option>
+          </select>
+          <button class="btn-primary" type="submit">Réserver ma démo gratuite →</button>
+          <p class="form-note">Sans engagement · Réponse sous 2h · 0 spam</p>
+        </form>
+        <div class="form-success" id="heroSuccess">
+          <div class="success-icon">✓</div>
+          <strong>Reçu ! On vous rappelle dans les 2 heures.</strong>
+          <span>Vérifiez vos SMS — on vous enverra aussi un message WhatsApp.</span>
+        </div>
+
+        <div class="pills">
+          <span class="pill"><span class="pill-check">✓</span> Installation 0 € ce mois</span>
+          <span class="pill"><span class="pill-check">✓</span> 97 €/mois</span>
+          <span class="pill"><span class="pill-check">✓</span> Sans engagement</span>
+          <span class="pill"><span class="pill-check">✓</span> 90 min chrono</span>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="phone-wrap">
+          <div class="phone-glow"></div>
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+              <div class="wa-header">
+                <div class="wa-av">P</div>
+                <div><div class="wa-name">Plomberie Martin</div><div class="wa-status">En ligne</div></div>
+              </div>
+              <div class="wa-msgs">
+                <div class="msg recv m1">Bonjour, j'ai une fuite sous mon évier, urgent 😬<span class="msg-time">14h23</span></div>
+                <div class="auto-tag m2">⚡ Capteo répond automatiquement</div>
+                <div class="msg sent m3">Bonjour ! 👋 Je suis sur un chantier. Pouvez-vous m'envoyer une photo ?<span class="msg-time">14h23 ✓✓</span></div>
+                <div class="msg recv m4">[📸 Photo envoyée]<span class="msg-time">14h24</span></div>
+                <div class="msg sent m5">Merci ! Votre adresse et dispo aujourd'hui ?<span class="msg-time">14h24 ✓✓</span></div>
+                <div class="msg recv m6">15 rue des Lilas Paris 11, libre à 17h<span class="msg-time">14h25</span></div>
+                <div class="msg sent m7">Parfait, je vous rappelle avant 16h. ✅<span class="msg-time">14h25 ✓✓</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-badge">🔔 Nouveau prospect qualifié reçu !</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat"><span class="stat-num">73%</span><span class="stat-label">des prospects rappellent un concurrent si pas de réponse</span></div>
+      <div class="stat"><span class="stat-num">&lt; 10 min</span><span class="stat-label">avant qu'il appelle le suivant sur Google</span></div>
+      <div class="stat"><span class="stat-num">−2 000 €</span><span class="stat-label">de chantiers perdus par mois en moyenne</span></div>
+      <div class="stat"><span class="stat-num">90 min</span><span class="stat-label">et c'est installé — premiers résultats dès le soir</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLÈME -->
+<section class="s-white reveal" id="probleme">
+  <div class="container">
+    <p class="eyebrow">Ce qui se passe vraiment</p>
+    <h2>Chaque appel manqué,<br>c'est un chantier<br>chez le concurrent.</h2>
+    <p class="s-intro">Vous travaillez bien. Vous êtes sérieux. Mais votre téléphone sonne quand vos mains sont prises — et le prospect n'attend pas.</p>
+    <div class="scenario">
+      <div class="sc-header">📞 Lundi 14h23 — Vous êtes sur un chantier. Voici ce qui se passe sans Capteo.</div>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-dot">📱</div><div class="tl-text"><strong>14h23 — Marie Dupont vous appelle</strong><span>Rénovation salle de bain. Budget estimé : <span class="hl">4 000 €</span></span></div></div>
+        <div class="tl-item"><div class="tl-dot">🔇</div><div class="tl-text"><strong>14h23 — Vous ne pouvez pas décrocher</strong><span>Vous êtes en hauteur. Les mains occupées. C'est impossible.</span></div></div>
+        <div class="tl-item"><div class="tl-dot">⏳</div><div class="tl-text"><strong>14h31 — Elle attend. Personne ne rappelle.</strong><span>Elle ouvre Google. Elle tape « plombier Paris ». Elle voit votre concurrent.</span></div></div>
+        <div class="tl-item"><div class="tl-dot">💸</div><div class="tl-text"><strong>14h35 — Elle appelle votre concurrent.</strong><span>Il décroche. Il prend le rendez-vous. <span class="hl">Il gagne 4 000 €. Vous ne saurez jamais.</span></span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="s-cream reveal" id="solution">
+  <div class="container">
+    <p class="eyebrow">Avec Capteo</p>
+    <h2>On installe tout.<br>Vous ne touchez à rien.</h2>
+    <p class="s-intro">Pas d'application à apprendre. Pas de tableau de bord. Capteo tourne dans votre WhatsApp habituel — silencieusement, automatiquement.</p>
+    <div class="steps-grid">
+      <div class="step-card"><span class="step-n">01</span><h3>Le prospect vous contacte</h3><p>Sur votre numéro WhatsApp habituel. Même si vous êtes en plein travail, même le dimanche.</p><span class="step-tag">N'importe quand</span></div>
+      <div class="step-card"><span class="step-n">02</span><h3>Capteo répond en 30 secondes</h3><p>Un message à votre nom, dans votre ton. Il pense vous écrire directement.</p><span class="step-tag">Automatique · 24h/24</span></div>
+      <div class="step-card"><span class="step-n">03</span><h3>Il envoie ses informations</h3><p>Photos, adresse, besoin, disponibilité. Il remplit tout lui-même. Vous recevez une fiche complète.</p><span class="step-tag">2 à 3 minutes</span></div>
+      <div class="step-card"><span class="step-n">04</span><h3>Vous rappelez préparé</h3><p>Vous savez déjà tout. Vous arrivez professionnel. Vous convertissez 2× plus de devis.</p><span class="step-tag">Alerte temps réel</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- AVANT/APRÈS -->
+<section class="s-white reveal">
+  <div class="container">
+    <p class="eyebrow">La différence</p>
+    <h2>Avant. Après.</h2>
+    <p class="s-intro">Ce qui change concrètement pour votre activité.</p>
+    <div class="ba-grid">
+      <div class="ba-card ba-before">
+        <div class="ba-title">😩 Sans Capteo</div>
+        <ul class="ba-list">
+          <li>Appels manqués plusieurs fois par semaine</li>
+          <li>Vous ne savez jamais qui vous a appelé</li>
+          <li>Vous rappelez dans le vide — le client est parti</li>
+          <li>Des milliers d'euros perdus sans le voir</li>
+          <li>Le concurrent répond. Il signe. Vous non.</li>
+        </ul>
+      </div>
+      <div class="ba-card ba-after">
+        <div class="ba-title">💪 Avec Capteo</div>
+        <ul class="ba-list">
+          <li>Chaque prospect capturé automatiquement</li>
+          <li>Vous recevez nom, besoin, photos, adresse</li>
+          <li>Vous rappelez en connaissant déjà tout</li>
+          <li>Zéro demande perdue — même le dimanche</li>
+          <li>Vous choisissez vos chantiers. Vous signez plus.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TÉMOIGNAGES -->
+<section class="s-cream reveal">
+  <div class="container">
+    <p class="eyebrow">Ils l'utilisent déjà</p>
+    <h2>Des vrais artisans.<br>Des vrais résultats.</h2>
+    <p class="s-intro">Pas des témoignages inventés. Des artisans qui avaient exactement votre problème.</p>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-q">« Le premier soir après l'installation, j'avais déjà 2 demandes dans WhatsApp. Des gens qui avaient appelé dans la journée. Je les rappelle le lendemain — j'ai signé les deux. »</p>
+        <div class="t-author"><div class="t-av">MR</div><div><div class="t-name">Marc R.</div><div class="t-role">Plombier · Lyon</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-q">« Avant je rappelais à l'aveugle et souvent le client avait déjà trouvé quelqu'un. Maintenant je sais ce qu'il veut avant d'appeler. Je transforme beaucoup plus. »</p>
+        <div class="t-author"><div class="t-av">JT</div><div><div class="t-name">Julien T.</div><div class="t-role">Électricien · Bordeaux</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-q">« J'étais sceptique parce que je suis pas très tech. L'installation s'est faite en 90 minutes au téléphone, je n'ai rien eu à faire. En 3 semaines c'était rentabilisé. »</p>
+        <div class="t-author"><div class="t-av">SC</div><div><div class="t-name">Sophie C.</div><div class="t-role">Peintre · Paris</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TARIF -->
+<section class="s-white reveal" id="tarif">
+  <div class="container">
+    <p class="eyebrow">Tarif</p>
+    <h2>Simple. Transparent.<br>Sans surprise.</h2>
+    <p class="s-intro">97 €/mois pour ne plus perdre 2 000 € de chantiers. Le calcul est simple.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Capteo Essentiel</div>
+        <div class="price-desc">Pour l'artisan solo qui veut ne plus perdre un seul appel.</div>
+        <div class="price-num"><sup>€</sup>97 <small>/mois</small></div>
+        <div class="price-install">Installation : <strong>0 € ce mois-ci</strong></div>
+        <ul class="price-feats">
+          <li>WhatsApp Business configuré à votre nom</li>
+          <li>Messages automatiques personnalisés</li>
+          <li>Collecte photos, adresse, besoin, dispo</li>
+          <li>Notification immédiate sur votre téléphone</li>
+          <li>Support réponse sous 4h</li>
+          <li>Sans engagement</li>
+        </ul>
+        <a href="#contact" class="p-cta p-cta-secondary">Démarrer maintenant →</a>
+      </div>
+      <div class="price-card price-featured">
+        <div class="price-badge">⭐ Le plus choisi</div>
+        <div class="price-name">Capteo Pro</div>
+        <div class="price-desc">Pour l'artisan qui veut maximiser ses résultats et scaler.</div>
+        <div class="price-num"><sup>€</sup>97 <small>/mois</small></div>
+        <div class="price-install">Installation : <strong>0 € ce mois-ci</strong> — Formation offerte</div>
+        <ul class="price-feats">
+          <li>Tout l'Essentiel +</li>
+          <li>Rapport mensuel des demandes reçues</li>
+          <li>Optimisation des messages tous les 30 jours</li>
+          <li>Support prioritaire — appel direct sous 1h</li>
+          <li>Onboarding personnalisé pour votre métier</li>
+          <li>Accès aux mises à jour futures incluses</li>
+        </ul>
+        <a href="#contact" class="p-cta p-cta-primary">Réserver ma démo gratuite →</a>
+      </div>
+    </div>
+    <div class="roi-box">
+      <span>💡</span>
+      <p><strong>Le calcul :</strong> 97 €/mois = 3,23 €/jour. Si vous récupérez un seul chantier à 1 500 € grâce à Capteo, c'est <strong>15 mois remboursés d'un coup</strong>. Ce n'est pas une dépense. C'est un investissement à ROI immédiat.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="s-cream reveal" id="faq">
+  <div class="container">
+    <p class="eyebrow">FAQ</p>
+    <h2>Les questions qu'on nous<br>pose le plus souvent.</h2>
+    <p class="s-intro">Pas de jargon. Des réponses directes.</p>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-q">Est-ce compliqué à mettre en place ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body"><p>Non. Vous n'avez besoin que d'un smartphone et de WhatsApp. Notre équipe installe tout à distance pendant un appel de 90 minutes. Vous n'avez rien à configurer. À la fin de l'appel, ça fonctionne.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-q">Combien de temps pour l'installation ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body"><p>90 minutes par téléphone, installation incluse. Vous commencez à recevoir vos premières demandes qualifiées le soir même.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-q">Est-ce que je garde mon numéro de téléphone ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body"><p>Oui. On utilise votre numéro professionnel habituel. Rien ne change pour vos clients — sauf que maintenant, personne ne reste sans réponse.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-q">Est-ce que ça fonctionne avec WhatsApp Business ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body"><p>Oui, c'est exactement sur WhatsApp Business que ça tourne. Si vous n'avez pas encore WhatsApp Business, on l'installe pour vous pendant la session de mise en place.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-q">Et si mes clients n'utilisent pas WhatsApp ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body"><p>Plus de 92% des Français de 25 à 65 ans utilisent WhatsApp tous les jours. Et quand un appel reste sans réponse, leur premier réflexe est d'envoyer un message.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-q">Je peux arrêter quand je veux ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-body"><p>Oui. Un message suffit. Désactivation sous 48h, sans frais, sans préavis, sans justification.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section reveal" id="contact">
+  <div class="cta-bg"></div>
+  <div class="container">
+    <div class="cta-inner">
+      <p class="eyebrow-light">Passez à l'action</p>
+      <h2 class="cta-h2">Combien de chantiers<br>allez-vous encore perdre<br>avant d'agir ?</h2>
+      <p class="cta-p">Démo gratuite de 20 minutes. On vous montre exactement ce que ça donne pour votre métier. Aucun engagement. Aucune carte bleue demandée.</p>
+      <form class="cta-form" id="ctaForm" onsubmit="submitForm(event,'cta')">
+        <div class="form-row">
+          <input type="text" placeholder="Votre prénom" required>
+          <input type="tel" placeholder="Votre téléphone" required>
+        </div>
+        <select onchange="this.style.color='rgba(255,255,255,.85)'" required>
+          <option value="" style="background:#080f28">Votre métier</option>
+          <option style="background:#080f28">Plombier</option>
+          <option style="background:#080f28">Électricien</option>
+          <option style="background:#080f28">Peintre</option>
+          <option style="background:#080f28">Maçon</option>
+          <option style="background:#080f28">Autre</option>
+        </select>
+        <button class="btn-primary" type="submit">Réserver ma démo gratuite →</button>
+        <p class="form-note">Sans engagement · Réponse sous 2h · 0 spam</p>
+      </form>
+      <div class="cta-success" id="ctaSuccess">
+        <div class="success-icon" style="background:#4ade80;color:#0a6e3f">✓</div>
+        <strong>Reçu ! On vous rappelle dans les 2 heures.</strong>
+        <span>Vérifiez vos SMS — on vous enverra aussi un message WhatsApp.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-logo">Cap<span>teo</span></span>
+      <p>Assistant WhatsApp pour artisans · France</p>
+      <p><a href="mailto:contact@capteo.fr">contact@capteo.fr</a> · <a href="#">Mentions légales</a> · <a href="#">CGV</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// FAQ
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!wasOpen) item.classList.add('open');
+}
+
+// Form submit
+function submitForm(e,src){
+  e.preventDefault();
+  if(src==='hero'){
+    document.getElementById('heroForm').classList.add('hide');
+    document.getElementById('heroSuccess').classList.add('show');
+  } else {
+    document.getElementById('ctaForm').style.display='none';
+    document.getElementById('ctaSuccess').classList.add('show');
+  }
+}
+
+// Scroll reveal
+const io=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('in'),i*60);
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(r=>io.observe(r));
+
+// Urgency counter
+let spots=7;
+setInterval(()=>{
+  if(spots>3&&Math.random()>.85){
+    spots--;
+    document.getElementById('spots').textContent='\u00a0'+spots+' places\u00a0';
+  }
+},50000);
+</script>
+</body>
+</html>
