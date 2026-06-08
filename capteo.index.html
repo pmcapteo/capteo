@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capteo — Ne perdez plus jamais un chantier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1C3557;
+  --navy2: #0F2240;
+  --orange: #E8520A;
+  --orange2: #FF6B2B;
+  --white: #FFFFFF;
+  --off: #F6F7F9;
+  --gray: #64748B;
+  --dark: #0D1B2E;
+  --border: #E2E8F0;
+  --green: #22C55E;
+}
+ 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: var(--white);
+  color: var(--dark);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+ 
+/* ── NAV ───────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; height: 62px;
+}
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 900; font-size: 22px;
+  color: var(--navy); text-decoration: none; letter-spacing: -0.5px;
+}
+.logo span { color: var(--orange); }
+.nav-links { display: none; align-items: center; gap: 28px; }
+.nav-links a {
+  font-size: 14px; font-weight: 600; color: var(--gray);
+  text-decoration: none; transition: color .15s;
+}
+.nav-links a:hover { color: var(--dark); }
+.nav-cta {
+  background: var(--orange); color: var(--white) !important;
+  padding: 9px 20px; border-radius: 8px; font-size: 14px;
+  font-weight: 700 !important; transition: background .15s, transform .1s !important;
+}
+.nav-cta:hover { background: var(--orange2) !important; transform: translateY(-1px); }
+.hamburger {
+  display: flex; flex-direction: column; gap: 5px;
+  cursor: pointer; background: none; border: none; padding: 4px;
+}
+.hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); border-radius: 2px; }
+.mobile-menu {
+  display: none; position: fixed; top: 62px; left: 0; right: 0; bottom: 0;
+  background: var(--white); z-index: 199; padding: 28px 24px;
+  flex-direction: column;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-size: 18px; font-weight: 600; color: var(--dark); text-decoration: none;
+  padding: 16px 0; border-bottom: 1px solid var(--border);
+}
+.mobile-menu a:last-child { border-bottom: none; color: var(--orange); margin-top: 8px; }
+ 
+/* ── HERO ──────────────────────────────────── */
+.hero {
+  min-height: 100svh;
+  background: var(--navy2);
+  padding: 110px 24px 60px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.hero-glow {
+  position: absolute; pointer-events: none;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,82,10,0.18) 0%, transparent 70%);
+  top: -100px; right: -150px;
+}
+.hero-glow2 {
+  position: absolute; pointer-events: none;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(28,53,87,0.6) 0%, transparent 70%);
+  bottom: -80px; left: -100px;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(232,82,10,0.15);
+  border: 1px solid rgba(232,82,10,0.35);
+  border-radius: 100px; padding: 7px 16px;
+  margin-bottom: 28px; width: fit-content;
+  animation: fadeUp .6s ease both;
+}
+.badge-pulse {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--orange);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
+.badge-txt {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--orange2);
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  font-weight: 900; line-height: 1.0;
+  letter-spacing: -2px; color: var(--white);
+  margin-bottom: 24px;
+  animation: fadeUp .6s .1s ease both;
+}
+.hero h1 em {
+  font-style: normal; color: var(--orange);
+  position: relative; display: inline-block;
+}
+.hero h1 em::after {
+  content: ''; position: absolute;
+  left: 0; right: 0; bottom: -3px; height: 3px;
+  background: var(--orange); border-radius: 2px;
+}
+.hero-sub {
+  font-size: 17px; line-height: 1.7;
+  color: rgba(255,255,255,0.65);
+  max-width: 480px; margin-bottom: 36px;
+  animation: fadeUp .6s .2s ease both;
+}
+.hero-sub strong { color: rgba(255,255,255,0.9); font-weight: 600; }
+.hero-btns {
+  display: flex; flex-direction: column; gap: 12px;
+  animation: fadeUp .6s .3s ease both;
+}
+.btn-orange {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--orange); color: var(--white);
+  padding: 17px 28px; border-radius: 12px;
+  font-size: 16px; font-weight: 700; text-decoration: none;
+  border: none; cursor: pointer;
+  transition: background .18s, transform .15s, box-shadow .18s;
+  box-shadow: 0 4px 24px rgba(232,82,10,.4);
+}
+.btn-orange:hover { background: var(--orange2); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(232,82,10,.5); }
+.btn-ghost {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: transparent; color: rgba(255,255,255,.8);
+  padding: 16px 28px; border-radius: 12px;
+  font-size: 16px; font-weight: 600; text-decoration: none;
+  border: 1.5px solid rgba(255,255,255,.2);
+  transition: border-color .18s, background .18s;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.06); }
+.hero-pills {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-top: 32px;
+  animation: fadeUp .6s .4s ease both;
+}
+.pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 100px; padding: 6px 14px;
+  font-size: 13px; font-weight: 600; color: rgba(255,255,255,.75);
+}
+.pill-ok { color: var(--green); font-size: 11px; }
+ 
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+ 
+/* ── STATS BAR ─────────────────────────────── */
+.stats-bar {
+  background: var(--navy);
+  border-top: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  padding: 28px 24px;
+  display: flex; justify-content: center;
+  flex-wrap: wrap; gap: 32px;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.2rem; font-weight: 900;
+  color: var(--orange); display: block; line-height: 1;
+}
+.stat-lbl { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 4px; }
+ 
+/* ── SECTIONS ──────────────────────────────── */
+section { padding: 80px 24px; }
+.s-tag {
+  font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--orange); margin-bottom: 14px;
+}
+h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900; letter-spacing: -1px; line-height: 1.1;
+  margin-bottom: 14px;
+}
+.s-sub {
+  font-size: 16px; color: var(--gray);
+  line-height: 1.7; max-width: 560px; margin-bottom: 48px;
+}
+ 
+/* ── PROBLÈME ──────────────────────────────── */
+.prob { background: var(--off); }
+.prob-grid { display: flex; flex-direction: column; gap: 14px; }
+.prob-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 16px; padding: 24px 20px;
+  display: flex; gap: 16px; align-items: flex-start;
+  transition: transform .2s, box-shadow .2s;
+}
+.prob-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.06); }
+.prob-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+.prob-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.prob-card p { font-size: 14px; color: var(--gray); line-height: 1.6; }
+.prob-stat { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 900; color: var(--orange); display: block; margin-bottom: 4px; }
+ 
+/* ── WHATSAPP DEMO ─────────────────────────── */
+.wa-section {
+  background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 100%);
+}
+.wa-section h2 { color: var(--white); }
+.wa-section .s-sub { color: rgba(255,255,255,.6); margin-bottom: 40px; }
+.wa-layout {
+  display: flex; flex-direction: column; gap: 40px;
+  align-items: flex-start;
+}
+.wa-explanation {
+  display: flex; flex-direction: column; gap: 20px;
+  max-width: 480px;
+}
+.wa-step {
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.wa-step-num {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--orange); color: var(--white);
+  font-family: 'Syne', sans-serif; font-weight: 900; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.wa-step-body h4 { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.wa-step-body p { font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.5; }
+ 
+/* PHONE MOCKUP */
+.phone-wrap {
+  width: 100%; max-width: 340px;
+  margin: 0 auto;
+}
+.phone {
+  background: #1A1A2E;
+  border-radius: 40px;
+  padding: 14px;
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.08),
+    0 32px 80px rgba(0,0,0,.6),
+    inset 0 1px 0 rgba(255,255,255,.1);
+  position: relative;
+}
+.phone-notch {
+  width: 100px; height: 26px;
+  background: #1A1A2E;
+  border-radius: 0 0 16px 16px;
+  margin: 0 auto 4px;
+  position: relative; z-index: 1;
+}
+.phone-screen {
+  background: #ECE5DD;
+  border-radius: 28px;
+  overflow: hidden;
+  min-height: 520px;
+}
+.wa-topbar {
+  background: #075E54;
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.wa-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange), #FF9A5C);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-weight: 900;
+  font-size: 13px; color: white; flex-shrink: 0;
+}
+.wa-contact { flex: 1; }
+.wa-contact-name { font-size: 14px; font-weight: 700; color: white; line-height: 1.2; }
+.wa-contact-status { font-size: 11px; color: rgba(255,255,255,.7); }
+.wa-back { color: rgba(255,255,255,.8); font-size: 20px; text-decoration: none; }
+.wa-msgs {
+  padding: 12px 10px;
+  display: flex; flex-direction: column; gap: 8px;
+  min-height: 420px;
+  background: #ECE5DD url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8b89a' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+ 
+/* Bulles */
+.bubble {
+  max-width: 82%;
+  padding: 8px 12px 6px;
+  border-radius: 12px;
+  font-size: 13px; line-height: 1.5;
+  position: relative;
+}
+.bubble.recv {
+  background: white;
+  align-self: flex-start;
+  border-top-left-radius: 4px;
+  color: #111;
+}
+.bubble.sent {
+  background: #DCF8C6;
+  align-self: flex-end;
+  border-top-right-radius: 4px;
+  color: #111;
+}
+.bubble-time {
+  font-size: 10px; color: #999;
+  text-align: right; margin-top: 2px;
+}
+.bubble.sent .bubble-time { color: #67a05a; }
+.bubble-label {
+  font-size: 10px; font-weight: 700;
+  color: var(--orange); margin-bottom: 2px;
+}
+.bubble-img {
+  background: linear-gradient(135deg, #ddd, #ccc);
+  border-radius: 8px; height: 80px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 6px; font-size: 28px;
+}
+.date-sep {
+  text-align: center;
+  font-size: 11px; color: #888;
+  background: rgba(255,255,255,.6);
+  border-radius: 100px; padding: 3px 12px;
+  align-self: center; margin: 4px 0;
+}
+ 
+/* Animation typage */
+.typing {
+  background: white; align-self: flex-start;
+  border-radius: 12px; border-top-left-radius: 4px;
+  padding: 10px 14px;
+  display: none;
+}
+.typing-dots { display: flex; gap: 4px; }
+.typing-dots span {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #aaa;
+  animation: dot 1.2s ease-in-out infinite;
+}
+.typing-dots span:nth-child(2) { animation-delay: .2s; }
+.typing-dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes dot { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} }
+ 
+/* Replay btn */
+.replay-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin: 20px auto 0;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  color: rgba(255,255,255,.8);
+  padding: 10px 20px; border-radius: 100px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: background .2s;
+}
+.replay-btn:hover { background: rgba(255,255,255,.2); }
+ 
+/* ── STEPS ─────────────────────────────────── */
+.steps-list { display: flex; flex-direction: column; gap: 0; }
+.step-item {
+  display: flex; gap: 20px; padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.step-item:last-child { border-bottom: none; }
+.step-num-box {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: var(--navy); color: var(--white);
+  font-family: 'Syne', sans-serif; font-weight: 900; font-size: 16px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.step-item h3 { font-size: 16px; font-weight: 700; margin-bottom: 5px; }
+.step-item p { font-size: 14px; color: var(--gray); line-height: 1.6; }
+.step-tag {
+  display: inline-block; margin-top: 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--orange);
+}
+ 
+/* ── MÉTIERS ───────────────────────────────── */
+.metiers { background: var(--navy2); }
+.metiers h2 { color: var(--white); }
+.metiers .s-sub { color: rgba(255,255,255,.55); }
+.metiers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.metier-card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px; padding: 18px 14px;
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.metier-card:hover { background: rgba(255,255,255,.1); border-color: rgba(232,82,10,.3); transform: translateY(-2px); }
+.metier-emoji { font-size: 26px; margin-bottom: 8px; }
+.metier-name { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.metier-desc { font-size: 12px; color: rgba(255,255,255,.45); line-height: 1.5; }
+ 
+/* ── TÉMOIGNAGES ───────────────────────────── */
+.testi-grid { display: flex; flex-direction: column; gap: 14px; }
+.testi-card {
+  background: var(--off); border: 1px solid var(--border);
+  border-radius: 16px; padding: 24px 20px;
+  transition: transform .2s;
+}
+.testi-card:hover { transform: translateY(-2px); }
+.stars { color: #F59E0B; font-size: 14px; letter-spacing: 2px; margin-bottom: 14px; }
+.testi-quote { font-size: 15px; font-weight: 500; color: var(--dark); line-height: 1.7; margin-bottom: 18px; font-style: italic; }
+.testi-author { display: flex; align-items: center; gap: 12px; }
+.author-av {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--navy); color: var(--white);
+  font-family: 'Syne', sans-serif; font-weight: 900; font-size: 14px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.author-name { font-size: 14px; font-weight: 700; }
+.author-role { font-size: 12px; color: var(--gray); }
+ 
+/* ── PRICING ───────────────────────────────── */
+.pricing { background: var(--off); }
+.pricing-card {
+  background: var(--white);
+  border: 2.5px solid var(--orange);
+  border-radius: 24px; padding: 40px 28px;
+  max-width: 440px; margin: 0 auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(232,82,10,.12);
+}
+.pricing-badge {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--orange); color: var(--white);
+  font-size: 11px; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase; padding: 5px 18px; border-radius: 100px;
+  white-space: nowrap;
+}
+.plan-name {
+  font-size: 13px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--gray);
+  text-align: center; margin-bottom: 10px;
+}
+.plan-price-wrap { text-align: center; margin-bottom: 6px; }
+.plan-price {
+  font-family: 'Syne', sans-serif;
+  font-size: 72px; font-weight: 900;
+  letter-spacing: -3px; color: var(--dark); line-height: 1;
+}
+.plan-price span { font-size: 22px; font-weight: 500; color: var(--gray); letter-spacing: 0; }
+.plan-install {
+  text-align: center; font-size: 15px; font-weight: 700;
+  color: var(--orange); margin-bottom: 6px;
+}
+.plan-install-note {
+  text-align: center; font-size: 13px; color: var(--gray); margin-bottom: 28px;
+}
+.plan-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 28px; }
+.plan-feats { list-style: none; display: flex; flex-direction: column; gap: 13px; margin-bottom: 32px; }
+.plan-feats li { font-size: 14px; font-weight: 500; display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+.feat-ok { color: var(--green); font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.plan-cta {
+  display: block; width: 100%; text-align: center; text-decoration: none;
+  padding: 18px; border-radius: 12px;
+  background: var(--orange); color: var(--white);
+  font-size: 16px; font-weight: 800;
+  transition: background .18s, transform .15s, box-shadow .18s;
+  box-shadow: 0 4px 20px rgba(232,82,10,.35);
+}
+.plan-cta:hover { background: var(--orange2); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(232,82,10,.5); }
+.plan-guarantee {
+  text-align: center; font-size: 12px; color: var(--gray);
+  margin-top: 14px; line-height: 1.5;
+}
+ 
+/* ── FAQ ───────────────────────────────────── */
+.faq-list { display: flex; flex-direction: column; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item:first-child { border-top: 1px solid var(--border); }
+.faq-btn {
+  display: flex; justify-content: space-between; align-items: center;
+  width: 100%; padding: 20px 0; cursor: pointer;
+  background: none; border: none; text-align: left; gap: 16px;
+  font-size: 15px; font-weight: 700; color: var(--dark); line-height: 1.4;
+}
+.faq-icon {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--off); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: var(--gray); flex-shrink: 0;
+  transition: transform .25s, background .2s;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); background: var(--orange); color: white; border-color: var(--orange); }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+.faq-answer p { padding: 0 0 20px; font-size: 14px; color: var(--gray); line-height: 1.7; }
+.faq-item.open .faq-answer { max-height: 300px; }
+ 
+/* ── CTA FINAL ─────────────────────────────── */
+.cta-final {
+  background: var(--navy2); text-align: center; padding: 80px 24px;
+  position: relative; overflow: hidden;
+}
+.cta-final::before {
+  content: ''; position: absolute;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,82,10,.2) 0%, transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+.cta-final h2 { color: var(--white); margin-bottom: 14px; position: relative; }
+.cta-final p { color: rgba(255,255,255,.6); font-size: 16px; margin-bottom: 36px; line-height: 1.6; position: relative; }
+.cta-final .btn-orange { max-width: 400px; margin: 0 auto 12px; position: relative; }
+.cta-final .btn-ghost { max-width: 400px; margin: 0 auto; position: relative; }
+ 
+/* ── FOOTER ────────────────────────────────── */
+footer {
+  background: #080E18; color: rgba(255,255,255,.35);
+  padding: 36px 24px; text-align: center;
+  font-size: 12px; line-height: 1.8;
+}
+footer a { color: rgba(255,255,255,.35); text-decoration: none; }
+.footer-logo {
+  font-family: 'Syne', sans-serif; font-weight: 900;
+  font-size: 20px; color: var(--white); margin-bottom: 12px;
+}
+.footer-logo span { color: var(--orange); }
+ 
+/* ── FAB ───────────────────────────────────── */
+.fab {
+  position: fixed; bottom: 24px; right: 20px; z-index: 300;
+  display: flex; align-items: center; gap: 10px;
+  background: var(--navy); color: var(--white);
+  padding: 12px 20px 12px 14px; border-radius: 100px;
+  font-size: 14px; font-weight: 700; text-decoration: none;
+  box-shadow: 0 4px 24px rgba(0,0,0,.3);
+  transition: transform .2s, box-shadow .2s;
+}
+.fab:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.4); }
+.fab-icon { font-size: 20px; }
+ 
+/* ── REVEAL ────────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.in { opacity: 1; transform: none; }
+ 
+/* ── DESKTOP ───────────────────────────────── */
+@media (min-width: 768px) {
+  nav { padding: 0 48px; }
+  .hamburger { display: none; }
+  .nav-links { display: flex; }
+  .hero { padding: 130px 48px 90px; align-items: flex-start; }
+  .hero h1 { max-width: 680px; }
+  .hero-sub { font-size: 18px; }
+  .hero-btns { flex-direction: row; }
+  .btn-orange, .btn-ghost { width: auto; }
+  section { padding: 96px 48px; }
+  .prob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .wa-layout { flex-direction: row; align-items: flex-start; gap: 64px; }
+  .phone-wrap { max-width: 300px; flex-shrink: 0; }
+  .metiers-grid { grid-template-columns: repeat(4, 1fr); }
+  .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .stats-bar { gap: 80px; }
+  .stat-num { font-size: 2.6rem; }
+}
+</style>
+</head>
+<body>
+ 
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">Cap<span>teo</span></a>
+  <div class="nav-links">
+    <a href="#comment">Comment ça marche</a>
+    <a href="#demo">Voir en direct</a>
+    <a href="#tarifs">Tarif</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact" class="nav-cta">Démo gratuite →</a>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+ 
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#comment" onclick="closeMobile()">Comment ça marche</a>
+  <a href="#demo" onclick="closeMobile()">Voir en direct</a>
+  <a href="#tarifs" onclick="closeMobile()">Tarif</a>
+  <a href="#faq" onclick="closeMobile()">FAQ</a>
+  <a href="#contact" onclick="closeMobile()">Démo gratuite →</a>
+</div>
+ 
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-badge">
+    <div class="badge-pulse"></div>
+    <span class="badge-txt">Capteo · Assistant WhatsApp · Pour artisans</span>
+  </div>
+  <h1>Pendant que vous<br>travaillez, vos clients<br>appellent <em>le suivant.</em></h1>
+  <p class="hero-sub">
+    Quand vous ne décrochez pas,<br>
+    <strong>Capteo répond à votre place sur WhatsApp</strong>
+    et récupère la demande complète de chaque prospect.
+  </p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-orange">Récupérer mes appels manqués →</a>
+    <a href="#demo" class="btn-ghost">📱 Voir comment ça marche</a>
+  </div>
+  <div class="hero-pills">
+    <div class="pill"><span class="pill-ok">✓</span> 99 € installation</div>
+    <div class="pill"><span class="pill-ok">✓</span> 59 €/mois</div>
+    <div class="pill"><span class="pill-ok">✓</span> Sans engagement</div>
+    <div class="pill"><span class="pill-ok">✓</span> Opérationnel en 1h</div>
+  </div>
+</section>
+ 
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <span class="stat-num">73%</span>
+    <div class="stat-lbl">des artisans ne rappellent<br>pas dans les 24h</div>
+  </div>
+  <div class="stat">
+    <span class="stat-num">5 min</span>
+    <div class="stat-lbl">délai idéal pour répondre<br>à un prospect</div>
+  </div>
+  <div class="stat">
+    <span class="stat-num">−2 000€</span>
+    <div class="stat-lbl">de CA perdu/mois<br>en appels manqués</div>
+  </div>
+  <div class="stat">
+    <span class="stat-num">1h30</span>
+    <div class="stat-lbl">pour tout installer<br>à distance</div>
+  </div>
+</div>
+ 
+<!-- PROBLÈME -->
+<section class="prob reveal" id="probleme">
+  <div class="s-tag">Le problème</div>
+  <h2>Vous perdez des chantiers<br>sans le savoir.</h2>
+  <p class="s-sub">Chaque semaine, des prospects vous appellent pendant que vous travaillez. Ils n'attendent pas. La plupart n'appellent jamais deux fois.</p>
+  <div class="prob-grid">
+    <div class="prob-card">
+      <div class="prob-icon">🔨</div>
+      <div>
+        <h3>Vous êtes sur le terrain</h3>
+        <p>Impossible de décrocher quand vous avez les mains occupées. Chaque appel manqué disparaît en silence.</p>
+      </div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-icon">⏱️</div>
+      <div>
+        <span class="prob-stat">73%</span>
+        <h3>des prospects n'attendent pas</h3>
+        <p>En moins de 10 minutes, ils appellent le concurrent suivant. La fenêtre est ultra-courte.</p>
+      </div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-icon">❓</div>
+      <div>
+        <h3>Vous ne savez pas qui a appelé</h3>
+        <p>Numéro inconnu. Vous rappelez trop tard. Le chantier est déjà parti ailleurs.</p>
+      </div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-icon">📉</div>
+      <div>
+        <span class="prob-stat">−2 000€</span>
+        <h3>de chiffre d'affaires perdu/mois</h3>
+        <p>Ce n'est pas un appel raté de temps en temps. C'est une habitude invisible qui coûte cher.</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- WHATSAPP DEMO -->
+<section class="wa-section reveal" id="demo">
+  <div class="s-tag">Voir en direct</div>
+  <h2>Ce que reçoit votre prospect<br>quand vous ne décrochez pas.</h2>
+  <p class="s-sub">En 30 secondes, le prospect reçoit un message professionnel à votre nom. Il décrit son besoin, envoie des photos. Vous recevez une fiche complète.</p>
+ 
+  <div class="wa-layout">
+    <!-- Explication -->
+    <div class="wa-explanation">
+      <div class="wa-step">
+        <div class="wa-step-num">1</div>
+        <div class="wa-step-body">
+          <h4>Le prospect vous appelle</h4>
+          <p>Vous êtes sur un chantier, impossible de décrocher. L'appel part en absence.</p>
+        </div>
+      </div>
+      <div class="wa-step">
+        <div class="wa-step-num">2</div>
+        <div class="wa-step-body">
+          <h4>Il reçoit un message WhatsApp à votre nom</h4>
+          <p>En moins de 30 secondes, un message chaleureux et professionnel lui demande de décrire son besoin.</p>
+        </div>
+      </div>
+      <div class="wa-step">
+        <div class="wa-step-num">3</div>
+        <div class="wa-step-body">
+          <h4>Il envoie photos, adresse, disponibilité</h4>
+          <p>Le prospect remplit tout lui-même. Vous recevez une fiche qualifiée et complète.</p>
+        </div>
+      </div>
+      <div class="wa-step">
+        <div class="wa-step-num">4</div>
+        <div class="wa-step-body">
+          <h4>Vous êtes alerté en temps réel</h4>
+          <p>Notification sur votre téléphone. Vous rappelez en sachant déjà tout. Taux de closing ×2.</p>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Phone mockup -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <!-- WhatsApp topbar -->
+          <div class="wa-topbar">
+            <a class="wa-back" href="#">‹</a>
+            <div class="wa-avatar">P</div>
+            <div class="wa-contact">
+              <div class="wa-contact-name">Plomberie Martin</div>
+              <div class="wa-contact-status">En ligne</div>
+            </div>
+          </div>
+          <!-- Messages -->
+          <div class="wa-msgs" id="waMsgs">
+            <div class="date-sep" id="wdSep" style="display:none">Aujourd'hui</div>
+          </div>
+        </div>
+      </div>
+      <button class="replay-btn" onclick="replayWA()">↺ Rejouer la conversation</button>
+    </div>
+  </div>
+</section>
+ 
+<!-- COMMENT ÇA MARCHE -->
+<section class="reveal" id="comment">
+  <div class="s-tag">Comment ça marche</div>
+  <h2>Simple. Automatique.<br>Efficace dès le 1er jour.</h2>
+  <p class="s-sub">Capteo configure un assistant WhatsApp à votre nom. Vous ne touchez à rien — il travaille pendant que vous travaillez.</p>
+  <div class="steps-list">
+    <div class="step-item">
+      <div class="step-num-box">1</div>
+      <div>
+        <h3>Votre numéro WhatsApp Business est configuré</h3>
+        <p>On installe tout à distance en 1h30. Vous n'avez besoin que de votre téléphone.</p>
+        <span class="step-tag">Installation 99 € · une fois</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num-box">2</div>
+      <div>
+        <h3>Un prospect appelle — vous ne pouvez pas répondre</h3>
+        <p>Aucun problème. Capteo prend le relais automatiquement en moins de 30 secondes.</p>
+        <span class="step-tag">Instantané</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num-box">3</div>
+      <div>
+        <h3>Il décrit son besoin via WhatsApp</h3>
+        <p>Photos, type de travaux, adresse, disponibilité. Le prospect remplit tout lui-même.</p>
+        <span class="step-tag">2–3 minutes</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num-box">4</div>
+      <div>
+        <h3>Vous recevez une fiche complète sur votre téléphone</h3>
+        <p>Vous rappelez en sachant déjà tout. Vous convertissez 2 fois plus.</p>
+        <span class="step-tag">Alerte en temps réel</span>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- MÉTIERS -->
+<section class="metiers reveal" id="metiers">
+  <div class="s-tag">Pour qui ?</div>
+  <h2 style="color:white">Pour tous les artisans qui<br>travaillent les mains occupées.</h2>
+  <p class="s-sub">Si votre téléphone sonne pendant que vous travaillez, Capteo est fait pour vous.</p>
+  <div class="metiers-grid">
+    <div class="metier-card"><div class="metier-emoji">🔧</div><div class="metier-name">Plombier</div><div class="metier-desc">Urgences — chaque appel manqué part chez le concurrent.</div></div>
+    <div class="metier-card"><div class="metier-emoji">⚡</div><div class="metier-name">Électricien</div><div class="metier-desc">En installation, impossible de décrocher.</div></div>
+    <div class="metier-card"><div class="metier-emoji">🎨</div><div class="metier-name">Peintre</div><div class="metier-desc">Mains dans la peinture. Vos leads arrivent quand même.</div></div>
+    <div class="metier-card"><div class="metier-emoji">🧱</div><div class="metier-name">Maçon</div><div class="metier-desc">Sur le chantier du matin au soir.</div></div>
+    <div class="metier-card"><div class="metier-emoji">🏠</div><div class="metier-name">Couvreur</div><div class="metier-desc">En hauteur — décrocher = risque. Capteo gère.</div></div>
+    <div class="metier-card"><div class="metier-emoji">🪵</div><div class="metier-name">Menuisier</div><div class="metier-desc">Machines bruyantes — il n'entend même pas sonner.</div></div>
+    <div class="metier-card"><div class="metier-emoji">🚿</div><div class="metier-name">Carreleur</div><div class="metier-desc">Travail minutieux — laissez Capteo répondre.</div></div>
+    <div class="metier-card"><div class="metier-emoji">🔩</div><div class="metier-name">Serrurrier</div><div class="metier-desc">Urgences 24h/24 — ne laissez plus personne sans réponse.</div></div>
+  </div>
+</section>
+ 
+<!-- TÉMOIGNAGES -->
+<section class="reveal" id="temoignages">
+  <div class="s-tag">Ils nous font confiance</div>
+  <h2>Résultats réels.<br>Artisans réels.</h2>
+  <p class="s-sub">Opérationnel en moins de 2h. Premiers résultats dès la première semaine.</p>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-quote">« En un mois j'ai récupéré 4 chantiers que j'aurais perdus. L'installation a pris une heure. »</p>
+      <div class="testi-author">
+        <div class="author-av">MR</div>
+        <div><div class="author-name">Marc R.</div><div class="author-role">Plombier — Lyon</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-quote">« Je reçois la demande complète sur mon téléphone. Je sais déjà de quoi ça parle avant de rappeler. »</p>
+      <div class="testi-author">
+        <div class="author-av">JT</div>
+        <div><div class="author-name">Julien T.</div><div class="author-role">Électricien — Bordeaux</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-quote">« J'étais sceptique. En 3 semaines le retour sur investissement était là. Je continue sans hésiter. »</p>
+      <div class="testi-author">
+        <div class="author-av">SC</div>
+        <div><div class="author-name">Sophie C.</div><div class="author-role">Peintre — Paris</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- PRICING -->
+<section class="pricing reveal" id="tarifs">
+  <div class="s-tag">Tarif</div>
+  <h2 style="text-align:center">Un prix. Transparent.<br>Sans surprise.</h2>
+  <p class="s-sub" style="text-align:center;margin:0 auto 48px">Sans engagement. Résiliable à tout moment. Opérationnel le jour même.</p>
+  <div class="pricing-card">
+    <div class="pricing-badge">Le plus choisi</div>
+    <div class="plan-name">Capteo Pro</div>
+    <div class="plan-price-wrap">
+      <span class="plan-price">59€ <span>/mois</span></span>
+    </div>
+    <div class="plan-install">+ 99 € d'installation (une fois)</div>
+    <div class="plan-install-note">Soit moins d'un café par jour. Sans engagement.</div>
+    <hr class="plan-divider">
+    <ul class="plan-feats">
+      <li><span class="feat-ok">✓</span> Configuration WhatsApp Business complète à votre nom</li>
+      <li><span class="feat-ok">✓</span> Messages automatiques personnalisés pour votre métier</li>
+      <li><span class="feat-ok">✓</span> Collecte nom, besoin, photos, adresse, disponibilité</li>
+      <li><span class="feat-ok">✓</span> Notification immédiate sur votre téléphone</li>
+      <li><span class="feat-ok">✓</span> Tableau de bord mensuel des prospects</li>
+      <li><span class="feat-ok">✓</span> Support direct sous 4h</li>
+      <li><span class="feat-ok">✓</span> Sans engagement — arrêt à tout moment</li>
+    </ul>
+    <a href="#contact" class="plan-cta">Démarrer maintenant →</a>
+    <p class="plan-guarantee">🛡️ Si vous ne récupérez pas au moins un chantier dans les 30 premiers jours, on vous rembourse l'installation.</p>
+  </div>
+</section>
+ 
+<!-- FAQ -->
+<section class="reveal" id="faq">
+  <div class="s-tag">FAQ</div>
+  <h2>Vos questions.</h2>
+  <div class="faq-list">
+    <div class="faq-item open">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        Faut-il être technique pour utiliser ça ?
+        <div class="faq-icon">+</div>
+      </button>
+      <div class="faq-answer"><p>Aucune compétence requise. Vous avez besoin d'un smartphone et de WhatsApp. On installe tout à distance en 1h30. Vous n'avez rien d'autre à faire que recevoir les notifications.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        Est-ce que ça marche avec mon numéro actuel ?
+        <div class="faq-icon">+</div>
+      </button>
+      <div class="faq-answer"><p>Oui. On connecte votre numéro WhatsApp existant. Vos contacts, votre historique, votre numéro — rien ne change pour vos clients actuels.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        Pourquoi 99 € d'installation ?
+        <div class="faq-icon">+</div>
+      </button>
+      <div class="faq-answer"><p>L'installation couvre 1h30 de configuration complète à distance, la personnalisation des messages pour votre métier exact, et le test en live avant de raccrocher. C'est une prestation humaine, pas un abonnement automatique.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        Puis-je arrêter quand je veux ?
+        <div class="faq-icon">+</div>
+      </button>
+      <div class="faq-answer"><p>Oui, sans frais et sans préavis. Un message ou un email et c'est désactivé sous 48h. Aucune clause cachée.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        Et si mes clients n'utilisent pas WhatsApp ?
+        <div class="faq-icon">+</div>
+      </button>
+      <div class="faq-answer"><p>92% des Français de 25 à 65 ans utilisent WhatsApp chaque jour. Ce sont exactement vos prospects. Et quand ils ne trouvent pas de réponse par téléphone, leur premier réflexe est d'envoyer un message.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)">
+        Et si ça ne fonctionne pas pour moi ?
+        <div class="faq-icon">+</div>
+      </button>
+      <div class="faq-answer"><p>Si dans les 30 premiers jours vous ne récupérez pas au moins un chantier supplémentaire, on vous rembourse les 99 € d'installation. On prend le risque à notre place.</p></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- CTA FINAL -->
+<section class="cta-final reveal" id="contact">
+  <div class="s-tag" style="color:rgba(255,255,255,.4)">Prêt à commencer ?</div>
+  <h2>Ne perdez plus<br>un seul chantier.</h2>
+  <p>Démo gratuite de 20 minutes. Sans engagement.<br>99 € pour démarrer. 59 €/mois ensuite.</p>
+  <a href="mailto:contact@capteo.fr" class="btn-orange">Réserver ma démo gratuite →</a>
+  <br><br>
+  <a href="tel:+33600000000" class="btn-ghost" style="max-width:360px;margin:0 auto">📞 Nous appeler directement</a>
+</section>
+ 
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Cap<span>teo</span></div>
+  <div>© 2025 Capteo · Tous droits réservés</div>
+  <div style="margin-top:8px">
+    <a href="#">Mentions légales</a> &nbsp;·&nbsp;
+    <a href="#">CGV</a> &nbsp;·&nbsp;
+    <a href="mailto:contact@capteo.fr">contact@capteo.fr</a>
+  </div>
+</footer>
+ 
+<!-- FAB -->
+<a class="fab" href="#contact">
+  <span class="fab-icon">💬</span> Une question ?
+</a>
+ 
+<script>
+// ── NAV ──────────────────────────────────────
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+ 
+// ── FAQ ──────────────────────────────────────
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+ 
+// ── REVEAL ───────────────────────────────────
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+ 
+// ── DESKTOP NAV ──────────────────────────────
+function checkNav() {
+  const d = document.querySelector('.nav-links');
+  if (d) d.style.display = window.innerWidth >= 768 ? 'flex' : 'none';
+}
+checkNav();
+window.addEventListener('resize', checkNav);
+ 
+// ── WHATSAPP ANIMATION ────────────────────────
+const messages = [
+  { type: 'date', text: "Aujourd'hui" },
+  { type: 'recv', label: 'PROSPECT', text: "Bonjour, j'ai une fuite sous mon évier, c'est urgent 😬", time: '14h23' },
+  { type: 'typing', delay: 1200 },
+  { type: 'sent', label: 'RÉPONSE AUTOMATIQUE', text: "Bonjour ! 👋 Merci de nous contacter.\n\nPour vous répondre rapidement, pouvez-vous nous envoyer une photo de la fuite ?", time: '14h23 ✓✓' },
+  { type: 'recv', label: 'PROSPECT', text: '📷 [Photo envoyée]', img: true, time: '14h24' },
+  { type: 'typing', delay: 1000 },
+  { type: 'sent', label: 'RÉPONSE AUTOMATIQUE', text: "Reçu ! 👌 Quelle est votre adresse et êtes-vous disponible aujourd'hui ?", time: '14h25 ✓✓' },
+  { type: 'recv', label: 'PROSPECT', text: "Oui ! 15 rue des Lilas, Paris 11e. Libre à partir de 17h.", time: '14h25' },
+  { type: 'typing', delay: 900 },
+  { type: 'sent', label: 'RÉPONSE AUTOMATIQUE', text: "Parfait ! M. Martin vous rappelle avant 16h pour confirmer. ✅\n\nMerci de votre confiance 👷", time: '14h26 ✓✓' },
+  { type: 'notif', text: '🔔 Nouvelle demande reçue de Sophie D.' },
+];
+ 
+let waTimer = null;
+let waIndex = 0;
+ 
+function makeBubble(msg) {
+  const container = document.getElementById('waMsgs');
+ 
+  if (msg.type === 'date') {
+    const d = document.createElement('div');
+    d.className = 'date-sep';
+    d.textContent = msg.text;
+    container.appendChild(d);
+    return;
+  }
+ 
+  if (msg.type === 'notif') {
+    const n = document.createElement('div');
+    n.style.cssText = 'background:rgba(28,53,87,.9);color:white;font-size:12px;font-weight:600;padding:10px 14px;border-radius:10px;text-align:center;margin:8px 4px;';
+    n.textContent = msg.text;
+    container.appendChild(n);
+    container.scrollTop = container.scrollHeight;
+    return;
+  }
+ 
+  if (msg.img) {
+    const b = document.createElement('div');
+    b.className = 'bubble recv';
+    b.innerHTML = `<div class="bubble-label">${msg.label || ''}</div><div class="bubble-img">📷</div><div class="bubble-time">${msg.time}</div>`;
+    container.appendChild(b);
+    container.scrollTop = container.scrollHeight;
+    return;
+  }
+ 
+  const b = document.createElement('div');
+  b.className = `bubble ${msg.type}`;
+  const txt = (msg.text || '').replace(/\n/g, '<br>');
+  b.innerHTML = `${msg.label ? `<div class="bubble-label">${msg.label}</div>` : ''}${txt}<div class="bubble-time">${msg.time || ''}</div>`;
+  b.style.opacity = '0';
+  b.style.transform = 'translateY(8px)';
+  container.appendChild(b);
+  container.scrollTop = container.scrollHeight;
+  requestAnimationFrame(() => {
+    b.style.transition = 'opacity .3s, transform .3s';
+    b.style.opacity = '1';
+    b.style.transform = 'none';
+  });
+}
+ 
+let typingEl = null;
+function showTyping() {
+  const container = document.getElementById('waMsgs');
+  typingEl = document.createElement('div');
+  typingEl.className = 'typing';
+  typingEl.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+  typingEl.style.display = 'flex';
+  container.appendChild(typingEl);
+  container.scrollTop = container.scrollHeight;
+}
+function hideTyping() {
+  if (typingEl) { typingEl.remove(); typingEl = null; }
+}
+ 
+function runNext() {
+  if (waIndex >= messages.length) return;
+  const msg = messages[waIndex++];
+ 
+  if (msg.type === 'typing') {
+    showTyping();
+    waTimer = setTimeout(() => {
+      hideTyping();
+      runNext();
+    }, msg.delay);
+    return;
+  }
+ 
+  makeBubble(msg);
+  waTimer = setTimeout(runNext, msg.type === 'recv' ? 1400 : 600);
+}
+ 
+function replayWA() {
+  clearTimeout(waTimer);
+  hideTyping();
+  waIndex = 0;
+  const c = document.getElementById('waMsgs');
+  c.innerHTML = '';
+  waTimer = setTimeout(runNext, 400);
+}
+ 
+// Start when in view
+const waObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && waIndex === 0) {
+      waTimer = setTimeout(runNext, 600);
+      waObs.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+const waSection = document.getElementById('demo');
+if (waSection) waObs.observe(waSection);
+</script>
+</body>
+</html>
